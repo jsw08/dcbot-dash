@@ -6,6 +6,7 @@
     "npm:@sveltejs/adapter-auto@4": "4.0.0_@sveltejs+kit@2.16.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.19.6____acorn@8.14.0___vite@6.0.11__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_svelte@5.19.6__acorn@8.14.0_vite@6.0.11",
     "npm:@sveltejs/kit@^2.16.0": "2.16.1_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_svelte@5.19.6__acorn@8.14.0_vite@6.0.11",
     "npm:@sveltejs/vite-plugin-svelte@5": "5.0.3_svelte@5.19.6__acorn@8.14.0_vite@6.0.11",
+    "npm:@types/node@^22.12.0": "22.12.0",
     "npm:autoprefixer@^10.4.20": "10.4.20_postcss@8.5.1",
     "npm:eslint-config-prettier@^10.0.1": "10.0.1_eslint@9.19.0",
     "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.19.0_svelte@5.19.6__acorn@8.14.0_postcss@8.5.1",
@@ -354,6 +355,12 @@
     },
     "@types/json-schema@7.0.15": {
       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
+    },
+    "@types/node@22.12.0": {
+      "integrity": "sha512-Fll2FZ1riMjNmlmJOdAyY5pUbkftXslB5DgEzlIuNaiWhXd00FhWxVC/r4yV/4wBb9JfImTu+jiSvXTkJ7F/gA==",
+      "dependencies": [
+        "undici-types"
+      ]
     },
     "@typescript-eslint/eslint-plugin@8.22.0_@typescript-eslint+parser@8.22.0__eslint@9.19.0__typescript@5.7.3_eslint@9.19.0_typescript@5.7.3": {
       "integrity": "sha512-4Uta6REnz/xEJMvwf72wdUnC3rr4jAQf5jnTkeRQ9b6soxLxhDEbS/pfMPoJLDfFPNVRdryqWUIV/2GZzDJFZw==",
@@ -1537,6 +1544,9 @@
     "typescript@5.7.3": {
       "integrity": "sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw=="
     },
+    "undici-types@6.20.0": {
+      "integrity": "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="
+    },
     "update-browserslist-db@1.1.2_browserslist@4.24.4": {
       "integrity": "sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg==",
       "dependencies": [
@@ -1615,6 +1625,7 @@
         "npm:@sveltejs/adapter-auto@4",
         "npm:@sveltejs/kit@^2.16.0",
         "npm:@sveltejs/vite-plugin-svelte@5",
+        "npm:@types/node@^22.12.0",
         "npm:autoprefixer@^10.4.20",
         "npm:eslint-config-prettier@^10.0.1",
         "npm:eslint-plugin-svelte@^2.46.1",
