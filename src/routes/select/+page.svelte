@@ -7,9 +7,14 @@
 </script>
 
 {#snippet card(props: typeof data["images"][number])}
-	<div class="p-3 m-2 rounded-xl shadow-xl bg-base-200 hover:[&>div]:visible">
-		<div class="hidden">
-			hi
+	<div class="p-3 m-2 rounded-xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition bg-base-300 relative ">
+		<div class="absolute text-3xl left-0 bottom-0 w-full flex flex-row justify-between p-5">
+			<div class="p-2 bg-base-100 rounded-xl shadow-lg ">
+				{props.name.charAt(0).toUpperCase() + props.name.slice(1)}
+			</div>
+			<div>
+				stuff?
+			</div>
 		</div>
 		<img
 			src={props.thumbnail ? `/sexy/${props.name}/${props?.thumbnail}` : '/empty.png'}
