@@ -36,7 +36,7 @@
 		{@render preloadItem?.(value)}
 	{/each}
 {:else}
-	<div class="h-full overflow-y-auto p-5" style:width="{columnWidthPx * columns}px">
+	<div class="h-full overflow-y-auto py-5 pr-5 gap-[20px]" style:width="{columnWidthPx * columns}px">
 		<div style:column-count={columns}>
 			{#each items as value}
 				<div class="inline-block break-inside-avoid {columnWidth}" bind:offsetWidth={columnWidthPx}>
