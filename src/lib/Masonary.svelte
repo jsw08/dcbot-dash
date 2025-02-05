@@ -30,7 +30,9 @@
 <svelte:window onresize={update} />
 
 {#if loading}
-	Loading..
+	<div class="h-full w-full flex justify-center items-center">
+		<span class="loading loading-dots loading-lg scale-500"></span>
+	</div>
 
 	{#each items as value}
 		{@render preloadItem?.(value)}

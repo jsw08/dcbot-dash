@@ -7,6 +7,6 @@
 
 {@render children()}
 
-{#each alerts as alert}
+{#each alerts.alerts as alert}
 	{@render alert.snippet(alert.text)}
 {/each}
