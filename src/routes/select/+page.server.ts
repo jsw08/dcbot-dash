@@ -1,16 +1,17 @@
 import { readdir } from "node:fs/promises"
-import {join} from "node:path"
-import type { Image } from "../../image.js";
-import {BASEURL} from "$env/static/private"
+import {join, isAbsolute, resolve} from "node:path"
+import type { Image } from "../../lib/image.js";
+import {SEXYDIR, SEXYURL} from "$env/static/private"
 
-const SEXY_DIR = join(import.meta.dirname, "../../../static/sexy/");
+const SEXY_DIR = isAbsolute(SEXYDIR) ? SEXYDIR : resolve(join(import.meta.dirname, "../../..", SEXYDIR));
 
-export async function load({params, url}): {images: Image[]}  {
-    const baseURL = 
+export async function load({params, url}): Promise<{images: Image[]}>  {
+    const baseurl = SEXYURL.startsWith("/") ? new URL(SEXYURL, url.origin) : new URL(SEXYURL);
+
     const dirs = (await readdir(SEXY_DIR, {withFileTypes: true})).filter(v => v.isDirectory());
-    const images: Image[][] = await Promise.all(dirs.map(dir => {
+    const images: Image[] = await Promise.all(dirs.map(dir => {
         return readdir(join(dir.parentPath, dir.name)).then(v => {
-            return {name: dir.name, thumbnail: v[0]}
+            return {name: dir.name, thumbnail: new URL(`${dir.name}/${v[0]}`, baseurl).toString()}
         })
     }))
 

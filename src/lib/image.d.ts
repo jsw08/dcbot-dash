@@ -1,4 +1,4 @@
 export type Image = {
 	name: string,
-	thumbnail: URL
+	thumbnail: string
 }
