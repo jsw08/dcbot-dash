@@ -44,7 +44,7 @@
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
-		class="bg-base-300 relative m-2 rounded-xl p-3 shadow-sm transition hover:-translate-y-0.5 hover:cursor-pointer hover:shadow-xl"
+		class="bg-base-300 relative m-2 rounded-xl p-3 shadow-sm transition hover:-translate-y-0.5 hover:cursor-pointer hover:shadow-xl min-h-40"
 		onclick={(_) => goto(`/manage/${props.name}`)}
 	>
 		<span class="badge badge-xl absolute bottom-0 left-0 m-5">
