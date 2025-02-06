@@ -1,18 +1,19 @@
 import { readdir } from "node:fs/promises"
 import {join, isAbsolute, resolve} from "node:path"
 import type { Image } from "$lib/image";
-import {SEXYDIR, SEXYURL} from "$env/static/private"
+import { SEXYURL} from "$env/static/private"
 import { error } from "@sveltejs/kit";
+import { SEXY_DIR } from "$lib/dirs.js";
 
-const SEXY_DIR = isAbsolute(SEXYDIR) ? SEXYDIR : resolve(join(import.meta.dirname, "../../../..", SEXYDIR));
 
 export async function load({params, url}): Promise<{user: string, images: Image[]}> {
     const user = params.slug;
+    console.log(SEXY_DIR)
     const userDirPath = join(SEXY_DIR, params.slug);
+    console.log(userDirPath)
 
     let images: string[] = []
     try {
-        console.log(userDirPath)
         images = await readdir(userDirPath)
     } catch {
         return error(404, {message: "Sexy mf not found."})

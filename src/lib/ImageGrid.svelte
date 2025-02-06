@@ -6,9 +6,15 @@
 	import { alerts } from './alerts.svelte';
 	import { alertError } from './Alerts.svelte';
 
-	let { images }: { images: Image[] } = $props();
-	let update = $state(() => {});
-
+	let {
+		images,
+		deleteHandler,
+		editHandler
+	}: {
+		images: Image[];
+		deleteHandler: (name: string) => void;
+		editHandler: (old: string, newName: string) => void;
+	} = $props();
 	if (images.length < 1) alerts.add(alertError, 'Error! No sexy images found.');
 
 	let editModal: { open: boolean; name: string; value: string } = $state({
@@ -22,28 +28,16 @@
 			name: props.name,
 			value: props.name
 		});
-	const cancelEditModal: EventHandler<MouseEvent> = (e) => {
-		e.preventDefault();
-		editModal.open = false;
-	};
-	const submitEditModal: EventHandler<SubmitEvent> = (e) => {
-		alert(`${editModal.name}, ${editModal.value}`);
-		editModal = { open: false, name: '', value: '' };
-	};
 
 	let deleteModal: { open: boolean; name: string } = $state({ open: false, name: 'tester' });
-	const submitDeleteModal = () => {
-		alert(`Deleted ${deleteModal.name}`);
-	};
-	const cancelDeleteModal: EventHandler<MouseEvent> = (e) => {
-		e.preventDefault();
-		deleteModal.open = false;
-	};
 	const openDeleteModal = (props: Image) =>
 		(deleteModal = {
 			open: true,
 			name: props.name
 		});
+
+	
+	let update = $state(() => {});
 </script>
 
 {#snippet imageItem(props: Image)}
@@ -57,8 +51,7 @@
 			{props.name.charAt(0).toUpperCase() + props.name.slice(1)}
 		</span>
 		<div
-			class="dropdown dropdown-bottom dropdown-center absolute top-0 right-0 m-3"
-			style="z-index: 50"
+			class="dropdown dropdown-bottom dropdown-center absolute top-0 right-0 m-3 z-10"
 			onclick={(e) => e.stopPropagation()}
 		>
 			<div tabindex="0" role="button" class="btn btn-circle btn-soft m-1">
@@ -107,7 +100,7 @@
 	<link rel="preload" href={props.thumbnail.toString() ?? '/empty.png'} as="image" />
 {/snippet}
 {#snippet editingNameTag(name: string)}
-	<span class="font-mono bg-base-300 p-1 rounded-sm">{name}</span>
+	<span class="bg-base-300 rounded-sm p-1 font-mono">{name}</span>
 {/snippet}
 
 {#if images.length > 0}
@@ -126,21 +119,23 @@
 	<div class="modal-box">
 		<h3 class="text-lg font-bold">Editing {@render editingNameTag(editModal.name)}</h3>
 		<p class="py-4">Fill in a descriptive name.</p>
-		<form class="modal-action w-full" method="dialog" onsubmit={submitEditModal}>
+		<form class="modal-action w-full" method="dialog" onsubmit={_ => editHandler(editModal.name, editModal.value)}>
 			<!-- if there is a button in form, it will close the modal -->
 			<input type="text" class="input w-full" bind:value={editModal.value} />
-			<button class="btn" onclick={cancelEditModal}>Cancel</button>
-			<button class="btn btn-primary">Submit</button>
+			<button class="btn" onclick={_ => editModal.open = false}>Cancel</button>
+			<button class="btn btn-primary" type="submit">Submit</button>
 		</form>
 	</div>
 </dialog>
 
 <dialog class="modal" open={deleteModal.open}>
 	<div class="modal-box">
-		<h3 class="text-lg font-bold">Would you like to delete {@render editingNameTag(deleteModal.name)}?</h3>
-		<form class="modal-action w-full" method="dialog" onsubmit={submitDeleteModal}>
+		<h3 class="text-lg font-bold">
+			Would you like to delete {@render editingNameTag(deleteModal.name)}?
+		</h3>
+		<form class="modal-action w-full" method="dialog" onsubmit={_ => deleteHandler(deleteModal.name)}>
 			<!-- if there is a button in form, it will close the modal -->
-			<button class="btn" onclick={cancelDeleteModal}>Cancel</button>
+			<button class="btn" onclick={_ => editModal.open = false}>Cancel</button>
 			<button class="btn btn-primary">Delete</button>
 		</form>
 	</div>
