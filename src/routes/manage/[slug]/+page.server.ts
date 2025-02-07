@@ -8,9 +8,7 @@ import { SEXY_DIR } from "$lib/dirs.js";
 
 export async function load({params, url}): Promise<{user: string, images: Image[]}> {
     const user = params.slug;
-    console.log(SEXY_DIR)
     const userDirPath = join(SEXY_DIR, params.slug);
-    console.log(userDirPath)
 
     let images: string[] = []
     try {

@@ -7,7 +7,11 @@
 
 	let { data: propsData }: PageProps = $props();
 	
-	const data = $state(propsData)
+	let data = $state(propsData)
+	$effect(() => {
+		data = propsData
+	})
+
 	const handleReq = async (name: string, newName?: string) => {
 		const res = await fetch(`/api/image/${data.user}/${name}`, {
 			method: newName ? "POST" : "DELETE",
