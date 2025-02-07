@@ -5,21 +5,33 @@
 	import ImageGrid from '$lib/ImageGrid.svelte';
 	import type { PageProps } from './$types';
 
-	let { data }: PageProps = $props();
-	const handleReq = async (user: string, newName?: string) => {
-		const res = await fetch(`/api/user/${user}`, {
-			method: newName ? "POST" : "DELETE",
-			body: newName
-		})	
+	let { data: propData }: PageProps = $props();
+	let data = $state(propData)
 
-		if (res.status !== 204)	{
-			alerts.add(alertError, await res.text())
-			return
+	const handleReq = async (name: string, newName?: string) => {
+		const res = await fetch(`/api/user/${name}`, {
+			method: newName ? 'POST' : 'DELETE',
+			body: newName
+		});
+
+		if (res.status !== 204) {
+			alerts.add(alertError, await res.text());
+			return;
 		}
 
-		alerts.add(alertSuccess, "Operation completed successfully, reloading...")
-		setTimeout(location.reload, 2000)
-	}
+		if (newName) {
+			const i = data.images.findIndex(v =>  v.name === name)
+
+			if (i === undefined) {
+				alerts.add(alertError, "Couldn't update page properly, reloading...")
+				return
+			}
+
+			data.images[i].name = newName
+		} else {
+			data.images = data.images.filter(v => v.name !== name)
+		}
+	};
 </script>
 
-<ImageGrid images={data.images} editHandler={handleReq} deleteHandler={handleReq}/>
+<ImageGrid images={data.images} editHandler={handleReq} deleteHandler={handleReq} />

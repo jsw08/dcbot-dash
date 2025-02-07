@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Masonary from '$lib/Masonary.svelte';
 	import { goto } from '$app/navigation';
-	import type { EventHandler } from 'svelte/elements';
 	import type { Image } from './image';
 	import { alerts } from './alerts.svelte';
 	import { alertError } from './Alerts.svelte';
@@ -9,11 +8,13 @@
 	let {
 		images,
 		deleteHandler,
-		editHandler
+		editHandler,
+		openHandler = (image) => goto(`/manage/${image.name}`)
 	}: {
 		images: Image[];
 		deleteHandler: (name: string) => void;
 		editHandler: (old: string, newName: string) => void;
+		openHandler?: (image: Image) => void;
 	} = $props();
 	if (images.length < 1) alerts.add(alertError, 'Error! No sexy images found.');
 
@@ -45,7 +46,7 @@
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
 		class="bg-base-300 relative m-2 rounded-xl p-3 shadow-sm transition hover:-translate-y-0.5 hover:cursor-pointer hover:shadow-xl min-h-40"
-		onclick={(_) => goto(`/manage/${props.name}`)}
+		onclick={(_) => openHandler(props)}
 	>
 		<span class="badge badge-xl absolute bottom-0 left-0 m-5">
 			{props.name.charAt(0).toUpperCase() + props.name.slice(1)}
@@ -122,7 +123,7 @@
 		<form class="modal-action w-full" method="dialog" onsubmit={_ => editHandler(editModal.name, editModal.value)}>
 			<!-- if there is a button in form, it will close the modal -->
 			<input type="text" class="input w-full" bind:value={editModal.value} />
-			<button class="btn" onclick={_ => editModal.open = false}>Cancel</button>
+			<button class="btn" onclick={e => {e.preventDefault(); editModal.open = false}}>Cancel</button>
 			<button class="btn btn-primary" type="submit">Submit</button>
 		</form>
 	</div>
@@ -135,7 +136,7 @@
 		</h3>
 		<form class="modal-action w-full" method="dialog" onsubmit={_ => deleteHandler(deleteModal.name)}>
 			<!-- if there is a button in form, it will close the modal -->
-			<button class="btn" onclick={_ => editModal.open = false}>Cancel</button>
+			<button class="btn" onclick={e => {e.preventDefault(); deleteModal.open = false}}>Cancel</button>
 			<button class="btn btn-primary">Delete</button>
 		</form>
 	</div>

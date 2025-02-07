@@ -3,6 +3,7 @@
 	import { alerts } from '$lib/alerts.svelte';
 	import ImageGrid from '$lib/ImageGrid.svelte';
 	import type { PageProps } from './$types';
+	import { goto } from '$app/navigation';
 
 	let { data: propsData }: PageProps = $props();
 	
@@ -33,4 +34,4 @@
 	}
 </script>
 
-<ImageGrid images={data.images} editHandler={handleReq} deleteHandler={handleReq}/>
+<ImageGrid images={data.images} editHandler={handleReq} deleteHandler={handleReq} openHandler={image => goto(image.thumbnail)}/>
